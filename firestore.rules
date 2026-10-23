@@ -1,0 +1,19 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // IMPORTANT: Replace these placeholders with the two real Firebase Authentication UIDs.
+    // Never use email addresses supplied by the browser as authorization.
+    function isCoupleMember() {
+      return request.auth != null
+        && request.auth.uid in [
+          "REPLACE_WITH_FIRST_MEMBER_UID",
+          "REPLACE_WITH_SECOND_MEMBER_UID"
+        ];
+    }
+
+    match /spaces/couple-space/{document=**} {
+      allow read: if isCoupleMember();
+      allow create, update, delete: if isCoupleMember();
+    }
+  }
+}

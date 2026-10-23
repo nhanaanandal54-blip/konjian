@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#080a10" />
+  <title>Our Space — 双人专属空间</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Our Space 首页"><span class="brand-mark">✳</span><span>our<span class="muted">space</span></span></a>
+      <div class="topbar-right"><span class="private-pill"><i></i> PRIVATE SPACE</span><button id="logoutBtn" class="icon-button hidden" title="退出登录" aria-label="退出登录">↗</button></div>
+    </header>
+
+    <section id="authView" class="auth-layout">
+      <div class="auth-copy">
+        <p class="eyebrow">A LITTLE UNIVERSE FOR TWO</p>
+        <h1>世界很大，<br><span>这里留给我们。</span></h1>
+        <p class="lead">一个只属于两个人的小小宇宙。收藏回忆，写下心事，让重要的瞬间有处可去。</p>
+        <div class="auth-note"><span class="lock-icon">⌑</span><span>私人空间 · 仅授权成员可访问</span></div>
+      </div>
+      <div class="glass-card auth-card">
+        <div class="card-top"><span class="tiny-label">WELCOME BACK</span><span class="spark">✦</span></div>
+        <h2>进入我们的空间</h2>
+        <p class="subtle">使用已获授权的账号登录。</p>
+        <form id="loginForm">
+          <label for="email">邮箱地址</label>
+          <input id="email" type="email" autocomplete="email" placeholder="you@example.com" required />
+          <label for="password">密码</label>
+          <input id="password" type="password" autocomplete="current-password" placeholder="输入密码" required minlength="6" />
+          <button class="primary-button" type="submit">登录空间 <span>↗</span></button>
+          <p id="authMessage" class="form-message" role="status"></p>
+        </form>
+        <div class="auth-foot"><span class="mini-dot"></span> 连接由 Firebase Authentication 保护</div>
+      </div>
+    </section>
+
+    <section id="appView" class="hidden">
+      <section class="welcome-row">
+        <div><p class="eyebrow">OUR LITTLE UNIVERSE</p><h1>只属于我们的<span class="gradient-text">时空。</span></h1><p class="lead compact">把平凡的日子，认真收藏。</p></div>
+        <div class="date-chip"><span class="date-icon">✧</span><div><small>今天是</small><strong id="todayLabel">—</strong></div></div>
+      </section>
+
+      <section class="couple-hero glass-card">
+        <div class="hero-orbit orbit-a"></div><div class="hero-orbit orbit-b"></div>
+        <div class="profile-block">
+          <div class="avatar avatar-one" id="avatarOne">启</div><p class="profile-role">PERSON ONE</p><h2 id="nameOne">启宁</h2><p class="profile-bio" id="bioOne">把日子过成喜欢的样子。</p>
+        </div>
+        <div class="connection"><span class="connection-line"></span><span class="heart">♡</span><span class="connection-caption">CONNECTED BY MEMORIES</span></div>
+        <div class="profile-block">
+          <div class="avatar avatar-two" id="avatarTwo">你</div><p class="profile-role">PERSON TWO</p><h2 id="nameTwo">另一位主人公</h2><p class="profile-bio" id="bioTwo">在这里留下你的故事。</p>
+        </div>
+        <button id="editProfilesBtn" class="edit-profile">编辑档案 <span>↗</span></button>
+      </section>
+
+      <nav class="section-nav" aria-label="页面导航">
+        <button class="nav-item active" data-target="memoriesSection">✧ <span>共同回忆</span></button>
+        <button class="nav-item" data-target="messagesSection">☷ <span>留言时光</span><span id="messageCount" class="count">0</span></button>
+      </nav>
+
+      <section id="memoriesSection" class="content-section">
+        <div class="section-heading"><div><p class="eyebrow">MOMENTS WE KEEP</p><h2>回忆收藏夹</h2></div><button id="addMemoryBtn" class="secondary-button">＋ 添加回忆</button></div>
+        <form id="memoryForm" class="glass-card editor hidden">
+          <div class="editor-title"><strong>记录一个瞬间</strong><button type="button" class="close-editor" data-close="memoryForm">×</button></div>
+          <div class="form-grid"><div><label for="memoryTitle">标题</label><input id="memoryTitle" maxlength="80" required placeholder="比如：一个很好的周末" /></div><div><label for="memoryDate">日期</label><input id="memoryDate" type="date" required /></div></div>
+          <label for="memoryImage">图片链接（可选）</label><input id="memoryImage" type="url" placeholder="https://... 图片链接" />
+          <label for="memoryText">写下这段回忆</label><textarea id="memoryText" rows="3" maxlength="1000" placeholder="那天发生了什么？"></textarea>
+          <button class="primary-button small" type="submit">保存回忆 <span>↗</span></button><p id="memoryMessage" class="form-message"></p>
+        </form>
+        <div id="memoriesGrid" class="memories-grid"></div>
+        <div id="emptyMemories" class="empty-state"><span class="empty-icon">✧</span><h3>第一段回忆，等你们来写</h3><p>照片、日期和那些不想忘记的小事，都可以放在这里。</p><button class="text-button" id="emptyAddBtn">创建第一条回忆 ↗</button></div>
+      </section>
+
+      <section id="messagesSection" class="content-section hidden">
+        <div class="section-heading"><div><p class="eyebrow">WORDS BETWEEN US</p><h2>留给彼此的话</h2></div></div>
+        <form id="messageForm" class="glass-card message-composer"><label for="messageText">写一句想留下的话</label><textarea id="messageText" rows="3" maxlength="1200" required placeholder="不必很长，真诚就好。"></textarea><div class="composer-bottom"><span class="subtle">只有已授权的两位成员可以查看。</span><button class="primary-button small" type="submit">留下这句话 ↗</button></div><p id="messageFeedback" class="form-message"></p></form>
+        <div id="messagesList" class="messages-list"></div>
+        <div id="emptyMessages" class="empty-state"><span class="empty-icon">♡</span><h3>这里还很安静</h3><p>写下第一句话，让这个空间开始有声音。</p></div>
+      </section>
+      <footer class="footer"><span>OUR SPACE © <span id="year"></span></span><span>MADE OF LITTLE MOMENTS <span class="footer-star">✦</span></span></footer>
+    </section>
+  </main>
+
+  <dialog id="profileDialog" class="modal glass-card">
+    <form id="profileForm" method="dialog">
+      <div class="editor-title"><div><p class="eyebrow">YOUR SHARED PROFILE</p><h2>双人档案</h2></div><button type="button" class="close-editor" data-dialog-close="profileDialog">×</button></div>
+      <div class="form-grid">
+        <div><label for="profileNameOne">第一位昵称</label><input id="profileNameOne" maxlength="24" required /></div>
+        <div><label for="profileNameTwo">第二位昵称</label><input id="profileNameTwo" maxlength="24" required /></div>
+        <div><label for="profileBioOne">第一位签名</label><input id="profileBioOne" maxlength="80" /></div>
+        <div><label for="profileBioTwo">第二位签名</label><input id="profileBioTwo" maxlength="80" /></div>
+      </div>
+      <button class="primary-button" type="submit">保存档案 <span>↗</span></button><p id="profileFeedback" class="form-message"></p>
+    </form>
+  </dialog>
+  <div id="toast" class="toast" role="status"></div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
